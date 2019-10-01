@@ -5,3 +5,10 @@
 *.gz
 *.fdb_latexmk
 *.aux
+/**/.DS_Store
+*.zip
+*.swp
+*.php
+LAB/Lab00-SelfIntroduction.pdf
+submissionrequirements.pdf
+LAB/Lab00-SelfIntroduction.pdf
