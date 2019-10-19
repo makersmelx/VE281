@@ -1,0 +1,304 @@
+\documentclass[12pt,a4paper]{article}
+%\usepackage{ctex}
+\usepackage{amsmath,amscd,amsbsy,amssymb,latexsym,url,bm,amsthm}
+\usepackage{epsfig,graphicx,subfigure}
+\usepackage{enumitem,balance}
+\usepackage{wrapfig}
+\usepackage{mathrsfs,euscript}
+\usepackage[x11names,svgnames,dvipsnames]{xcolor}
+\usepackage{hyperref}
+\usepackage[vlined,ruled,commentsnumbered,linesnumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{multicol}
+%\usepackage{fontspec}
+
+\renewcommand{\listalgorithmcfname}{List of Algorithms}
+\renewcommand{\algorithmcfname}{Alg}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+
+%\numberwithin{equation}{section}
+%\numberwithin{figure}{section}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\postscript}[2]
+ {\setlength{\epsfxsize}{#2\hsize}
+  \centerline{\epsfbox{#1}}}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\setlength{\oddsidemargin}{-0.365in}
+\setlength{\evensidemargin}{-0.365in}
+\setlength{\topmargin}{-0.3in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textheight}{10.1in}
+\setlength{\textwidth}{7in}
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+
+\definecolor{codegreen}{rgb}{0.44,0.68,0.28}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+
+\lstset{
+language=C++,
+frame=shadowbox,
+keywordstyle = \color{blue}\bfseries,
+commentstyle=\color{codegreen},
+tabsize = 4,
+backgroundcolor=\color{backcolour},
+numbers=left,
+numbersep=5pt,
+breaklines=true,
+emph = {int,float,double,char},emphstyle=\color{orange},
+emph ={[2]const, typedef},emphstyle = {[2]\color{red}} }
+
+
+
+\begin{document}
+\noindent
+
+%========================================================================
+\noindent\framebox[\linewidth]{\shortstack[c]{
+\Large{\textbf{Lab04-Hashing}}\vspace{1mm}\\
+VE281 - Data Structures and Algorithms, Xiaofeng Gao, TA: Qingmin Liu, Autumn 2019}}
+%CS26019 - Algorithm Design and Analysis, Xiaofeng Gao, Autumn 2019}}
+\begin{center}
+\footnotesize{\color{red}$*$ Please upload your assignment to website. Contact webmaster for any questions.}
+
+\footnotesize{\color{blue}$*$ Name:Wu Jiayao  \quad Student ID:517370910257 \quad Email: jiayaowu1999@sjtu.edu.cn}
+\end{center}
+
+
+\begin{enumerate}
+
+\item  Given a sequence of inputs 192, 42, 142, 56, 39, 319, 14, insert them
+into a hash table of size 10. Suppose that the hash function is $h(x) = x\%10$. Show the
+result for the following implementations:
+	\begin{enumerate}
+	\item Hash table using separate chaining. Assume that the insertion is always at the
+beginning of each linked list.
+	\item Hash table using linear probing.
+	\item Hash table using quadratic probing.
+	\item Hash table using double hashing, with the second hash function as $h_2 (x) = (x+4)\%7$.
+	\end{enumerate}
+\begin{solution}
+	$\ $  \\
+	\begin{enumerate}
+		\item Separate chaining
+			\begin{table}[h]
+				\centering
+				
+				\label{separate chaining}
+				\begin{tabular}{|c|ccc|}
+					\hline
+					{[}0{]} &     &    &     \\ \hline
+					{[}1{]} &     &    &     \\ \hline
+					{[}2{]} & 142 & 42 & 192 \\ \hline
+					{[}3{]} &     &    &     \\ \hline
+					{[}4{]} & 14  &    &     \\ \hline
+					{[}5{]} &     &    &     \\ \hline
+					{[}6{]} & 56  &    &     \\ \hline
+					{[}7{]} &     &    &     \\ \hline
+					{[}8{]} &     &    &     \\ \hline
+					{[}9{]} & 319 & 39 &    
+				\end{tabular}
+				\caption{separate chaining}
+			\end{table}
+		\item linear probing
+			\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			{[}0{]} & {[}1{]} & {[}2{]} & {[}3{]} & {[}4{]} & {[}5{]} & {[}6{]} & {[}7{]} & {[}8{]} & {[}9{]} \\ \hline
+			319     &         & 192     & 42      & 142     & 14      & 56      &         &         & 39      \\ \hline
+			\end{tabular}
+			\caption{linear probing}
+			\label{lb}
+			\end{table}
+		\item quadratic probing
+			\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			{[}0{]} & {[}1{]} & {[}2{]} & {[}3{]} & {[}4{]} & {[}5{]} & {[}6{]} & {[}7{]} & {[}8{]} & {[}9{]} \\ \hline
+			319     &         & 192     & 42      & 14      &         & 142     & 56      &         & 39      \\ \hline
+			\end{tabular}
+			\caption{quadratic probing}
+			\label{pb}
+			\end{table}
+			\newpage
+		\item double hashing
+			\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			{[}0{]} & {[}1{]} & {[}2{]} & {[}3{]} & {[}4{]} & {[}5{]} & {[}6{]} & {[}7{]} & {[}8{]} & {[}9{]} \\ \hline
+			56      & 319     & 192     &         & 14      &         & 42      &         & 142     & 39      \\ \hline
+			\end{tabular}
+			\caption{double hashing}
+			\label{dh}
+			\end{table}
+	\end{enumerate}
+\end{solution}
+\item	 Show the result of rehashing the four hash tables in the Problem 1. Rehash
+using a new table size of 14, and a new hash function $h(x) = x\%14$. {\color{blue}(Hint: The order
+in rehashing depends on the order stored in the old hash table, not on their initial
+inserting order.)}
+\begin{solution}
+	$\ $  \\
+	\begin{enumerate}
+		\item Separate chaining
+			\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|ccc|}
+			\hline
+			{[}0{]}  & 56  & 14  & 42 \\ \hline
+			{[}1{]}  &     &     &    \\ \hline
+			{[}2{]}  & 142 &     &    \\ \hline
+			{[}3{]}  &     &     &    \\ \hline
+			{[}4{]}  &     &     &    \\ \hline
+			{[}5{]}  &     &     &    \\ \hline
+			{[}6{]}  &     &     &    \\ \hline
+			{[}7{]}  &     &     &    \\ \hline
+			{[}8{]}  &     &     &    \\ \hline
+			{[}9{]}  &     &     &    \\ \hline
+			{[}10{]} & 192 &     &    \\ \hline
+			{[}11{]} & 39  & 319 &    \\ \hline
+			{[}12{]} &     &     &    \\ \hline
+			{[}13{]} &     &     &    \\ \hline
+			\end{tabular}
+			\caption{seperate chaining}
+			\label{sc14}
+			\end{table}
+		\item linear probing
+			\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			{[}0{]} & {[}1{]} & {[}2{]} & {[}3{]} & {[}4{]} & {[}5{]} & {[}6{]} & {[}7{]} & {[}8{]} & {[}9{]} & {[}10{]} & {[}11{]} & {[}12{]} & {[}13{]} \\ \hline
+			42      & 14      & 142     & 56      &         &         &         &         &         &         & 192      & 319      & 39       &          \\ \hline
+			\end{tabular}
+			\caption{linear probing}
+			\label{lb14}
+			\end{table}
+			\newpage
+		\item quadratic probing
+			\begin{table}[h]
+			\centering
+			\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+			\hline
+			{[}0{]} & {[}1{]} & {[}2{]} & {[}3{]} & {[}4{]} & {[}5{]} & {[}6{]} & {[}7{]} & {[}8{]} & {[}9{]} & {[}10{]} & {[}11{]} & {[}12{]} & {[}13{]} \\ \hline
+			42      & 14      & 142     &         & 56      &         &         &         &         &         & 192      & 319      & 39       &          \\ \hline
+			\end{tabular}
+			\caption{quadratic probing}
+			\label{qp14}
+			\end{table}
+			
+		\item double hashing
+			\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			{[}0{]} & {[}1{]} & {[}2{]} & {[}3{]} & {[}4{]} & {[}5{]} & {[}6{]} & {[}7{]} & {[}8{]} & {[}9{]} & {[}10{]} & {[}11{]} & {[}12{]} & {[}13{]} \\ \hline
+			56      &         & 142     &         & 14      &         &         &         & 42      &         & 192      & 319      & 39       &          \\ \hline
+			\end{tabular}
+			\caption{double hashing}
+			\label{db14}
+			\end{table}
+	\end{enumerate}
+\end{solution}
+
+\item  Suppose we want to design a hash table containing at most 900 elements using
+linear probing. We require that an unsuccessful search needs no more than 8.5 compares
+and a successful search needs no more than 3 compares on average. Please determine
+a proper hash table size.
+
+\begin{solution}
+	$\ $ \\
+	$$
+	U(L)=\frac{1}{2}\left[1+\left(\frac{1}{1-L}\right)^{2}\right] \leq 8.5 
+	$$
+	$$
+	S(L)=\frac{1}{2}\left[1+\frac{1}{1-L}\right] \leq 3
+	$$
+	Therefore,
+	$$
+		0 < L \leq \frac{3}{4}
+	$$
+	$$
+		size \geq 900 \times \frac{4}{3} = 1200
+	$$
+	The hash table size should be 1201, the smallest prime that meets the requirement.
+\end{solution}
+
+\item Implement queues with two stacks. We know that stacks are first in last out (FILO) and queues are first in first out (FIFO). We can implement queues with two stacks. The method is as follows:
+	\begin{itemize}
+		\item{For \textbf{enqueue} operation,} push the element into stack $S_1$.
+		\item{For \textbf{dequeue} operation,} there are two cases:
+		\begin{itemize}
+			\item \textbf{$S_2 = \emptyset$,} pop all elements in $S_1$, push these elements into $S_2$, pop $S_2$
+			\item \textbf{$S_2 \neq \emptyset$,} pop $S_2$
+		\end{itemize}
+	\end{itemize}
+	Using amortized analysis to calculate the complexity of \textbf{enqueue} and \textbf{dequeue} step.
+\begin{solution}
+	$\ $ \\
+	$\Phi(S)$ denotes the number of items in stack. \\
+	One push operation takes:
+	$$
+		\Phi(S_i) - \Phi(S_i-1) = 1
+	$$
+	$$
+		\hat{C_i} = C_i + \Phi(S_i) - \Phi(S_{i-1}) = 2
+	$$
+	One pop operation takes:
+	$$
+		\Phi(S_i) - \Phi(S_i-1) = -1
+	$$
+	$$
+		\hat{C_i} = C_i + \Phi(S_i) - \Phi(S_{i-1}) = 0
+	$$
+	\begin{enumerate}
+		\item \textbf{enqueue} \\
+			The amortized cost of pushing onto stack 1 is:
+			$$
+				\hat{C_i} = C_i + \Phi(S_i) - \Phi(S_{i-1}) = 2
+			$$
+			The amortized cost of poping from stack 1 and pushing onto stack 2 is:
+			$$
+				\hat{C_i} = (C_i + \Phi(S_i) - \Phi(S_{i-1}))_{push} + (C_i + \Phi(S_i) - \Phi(S_{i-1}))_{pop}= 2
+			$$
+			One enqueue operation involves the two operations above. The total amortized cost is $4$.
+		\item \textbf{dequeue} \\
+				\begin{itemize}
+					\item $S_2 = \emptyset$, the number of items in the stack changes by minus $1$.
+						$$
+							\hat{C_i} = (C_i + \Phi(S_i) - \Phi(S_{i-1}))_{pop}  = 1-1=0;
+						$$
+					\item $S_2 \neq \emptyset$, one pop operation is done
+						$$
+							\hat{C_i} = (C_i + \Phi(S_i) - \Phi(S_{i-1}))_{pop} = 0;
+						$$
+				\end{itemize}
+				Hence, the amortized cost is $0$.
+	\end{enumerate}
+\end{solution}
+
+\end{enumerate}
+
+%========================================================================
+\end{document}
